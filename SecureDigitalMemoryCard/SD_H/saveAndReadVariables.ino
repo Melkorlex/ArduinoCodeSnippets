@@ -24,6 +24,7 @@ File sdFile;                           // File object
 int iAirVal = 50; 
 int iWatVal = 100;
 bool xSdAvailable = false;
+String str_persistentVarPath;
 
 void setup() {
   pinMode(iSpi_SS, OUTPUT);
@@ -38,9 +39,21 @@ void loop() {
 // SD Init
 // ##################
 void sdInit(){
-while(!Serial);
+  Serial.begin(9600);
+  while(!Serial);
+
   xSdAvailable = SD.begin(iSpi_SS);
   delay(1000);
+
+  if(!SD.exists("dat")){
+    SD.mkdir("dat");
+    delay(500);
+
+    while(!SD.exists(str_persistentVarPath)){
+      sdFile = SD.open(str_persistentVarPath, FILE_WRITE);
+      sdFile.close();
+    }
+  }
 }
 
 // ##################
