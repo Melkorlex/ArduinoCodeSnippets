@@ -1,7 +1,23 @@
+// ###########
+// How to wire SD Card module
+// ###########
+/*
+                Arduino UNO     Arduino MEGA      Arduino MKR      
+VCC             3.3V or 5V      3.3V or 5V  	    3.3V 
+CS (SS)         4               53                7
+MOSI(COPI)      11              51                8
+CLK(SCK)        13              52                9
+MISO(CIPO)      12              50                10  
+GND             GND             GND               GND
+*/
+
+
+
+// ###################
 #include <SD.h>      // https://www.arduino.cc/reference/en/libraries/sd/
 #include <SPI.h>     // https://www.arduino.cc/reference/en/language/functions/communication/spi/
+const int iSpi_SS = 53;  // SPI SS Pin (CS == Chip Select / SS == Slave Select)
 
-const int iSpi_SS = 53;  // SPI SS Pin (Chip Select)
 
 File sdFile;                           // File object
 
@@ -9,12 +25,23 @@ int iAirVal = 50;
 int iWatVal = 100;
 bool xSdAvailable = false;
 
+void setup() {
+  pinMode(iSpi_SS, OUTPUT);
+  sdInit();
+}
+
+void loop() {
+
+}
+
 // ##################
 // SD Init
 // ##################
+void sdInit(){
 while(!Serial);
   xSdAvailable = SD.begin(iSpi_SS);
   delay(1000);
+}
 
 // ##################
 // The Function: Saving Var onto SD Card
