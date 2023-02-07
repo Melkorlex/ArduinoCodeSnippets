@@ -1,10 +1,25 @@
 // With this scetch snipped you are able to document any actions of your arduino (failures, important code actions and so on)
 
+// ###########
+// How to wire SD Card module
+// ###########
+/*
+                Arduino UNO     Arduino MEGA      Arduino MKR      
+VCC             3.3V or 5V      3.3V or 5V  	    3.3V 
+CS (SS)         4               53                7
+MOSI(COPI)      11              51                8
+CLK(SCK)        13              52                9
+MISO(CIPO)      12              50                10  
+GND             GND             GND               GND
+*/
 
+
+
+// ###################
 
 #include <SD.h>      // https://www.arduino.cc/reference/en/libraries/sd/
 #include <SPI.h>     // https://www.arduino.cc/reference/en/language/functions/communication/spi/
-const int iSpi_SS = 53;  // SPI SS Pin (Chip Select)
+const int iSpi_SS = 53;  // SPI SS Pin (CS == Chip Select / SS == Slave Select)
 
 File sdFile;                            // File object
 bool xRtcAvailable = false;        // dummy variable for RTC. If you want to use the rtc timestamp you have to init it --> take a look here: 
