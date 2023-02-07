@@ -37,6 +37,26 @@ void loop() {
  delay(1000);
 }
 
+void sdInit(){
+  Serial.begin(9600);
+  while(!Serial);
+
+  xSdAvailable = SD.begin(iSpi_SS);
+  delay(1000);
+  
+ if(!SD.exists("log")){
+    nextionSplashScreen(false,"-log- Ordner nicht vorhanden... erstelle...");
+    SD.mkdir("log");
+    delay(500);
+
+    while(!SD.exists(str_dataLogFilePath)){
+      nextionSplashScreen(false,"-dataLogFile- nicht vorhanden... erstelle...");
+      sdFile = SD.open(str_dataLogFilePath, FILE_WRITE);
+      sdFile.close();
+    }
+  }  
+}
+
 
 void sdDataLogger(){
   sdFile = SD.open(str_dataLogFilePath, FILE_WRITE);
